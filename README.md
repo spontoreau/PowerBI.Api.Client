@@ -69,7 +69,7 @@ PowerBIClient.Do(api => {
 });
 ```
 
-**Check if a name matches with a registered Dataset **
+**Check if a name matches with a registered Dataset**
 ```csharp
 PowerBIClient.Do(api => {
 	var isDatasetExist = api.IsDatasetExist("myDatasetName");
