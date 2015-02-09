@@ -1,8 +1,7 @@
 PowerBI.Api.Client
 =======
 
-C# Client library to deal with PowerBI Rest Api.
-
+C# Client library to deal with PowerBI Rest Api : [MSDN DOCUMENTATION](https://msdn.microsoft.com/en-us/library/dn877544)
 
 
 ## Installation
@@ -23,7 +22,7 @@ PM> Install-Package PowerBI.Api.Client
 
 ## Getting start
 
-To configure the Client Api you must use Configuration section
+To configure the PowerBI Client Api you must use the configuration section. Add it to the .config
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -44,7 +43,7 @@ To configure the Client Api you must use Configuration section
 </configuration>
 ```
 
-Client is now ready. It's simple to use, call the Do method of PowerBIClient class to define an Action which use a connected instance.
+Client is now ready. It's simple to use, call the **Do** method of **PowerBIClient** class to define an action which use a connected instance.
 
 ```csharp
 PowerBIClient.Do(api => {
@@ -136,6 +135,12 @@ PowerBIClient.Do(api => {
 	var isDelete = api.Delete<Product>(datasetId);
 });
 ```
+
+
+
+## More to come !
+PowerBI & PowerBI Api are preview product. They are actively develp by Microsoft.
+I hope they will add new features to the Rest api soon
 
 
 
