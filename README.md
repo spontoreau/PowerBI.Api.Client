@@ -1,7 +1,7 @@
 PowerBI.Api.Client
 =======
 
-Client library to deal with PowerBI Rest Api.
+C# Client library to deal with PowerBI Rest Api.
 
 
 
@@ -10,6 +10,21 @@ Client library to deal with PowerBI Rest Api.
 ```
 PM> Install-Package PowerBI.Api.Client
 ```
+
+## Features
+
+  * Automatic OAuth2 authenticate.
+  * Dataset list
+  * Dataset & tables creation
+  * Insert datas in tables
+  * Delete all datas in tables
+
+
+
+## Getting start
+
+
+
 
 ## Licence
 
