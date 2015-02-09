@@ -43,7 +43,7 @@ To configure the PowerBI Client Api you must use the configuration section. Add 
 </configuration>
 ```
 
-Client is now ready. It's simple to use, call the **Do** method of **PowerBIClient** class to define an action which uses an authenticated instance.
+The client is now ready. It's easy to use, call the **Do** method of **PowerBIClient** class to define an action which uses an authenticated instance.
 
 ```csharp
 PowerBIClient.Do(api => {
