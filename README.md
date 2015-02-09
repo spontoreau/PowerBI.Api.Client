@@ -54,6 +54,91 @@ PowerBIClient.Do(api => {
 
 
 
+## Api methods
+
+**Get all Datasets**
+```csharp
+PowerBIClient.Do(api => {
+	var datasets = api.GetDatasets();
+});
+```
+
+**Get Dataset identifier by name**
+```csharp
+PowerBIClient.Do(api => {
+	var datasetId = api.GetDatasetId("myDatasetName");
+});
+```
+
+**Determine if a Dataset corresponding to a name exists**
+```csharp
+PowerBIClient.Do(api => {
+	var isDatasetExist = api.IsDatasetExist("myDatasetName");
+});
+```
+
+**Determine if a Dataset corresponding to an identifier exists**
+```csharp
+PowerBIClient.Do(api => {
+	var isDatasetIdExist = api.IsDatasetIdExist("myDatasetId");
+});
+```
+
+**Create a Dataset and the associate tables**
+```csharp
+PowerBIClient.Do(api => {
+	var isCreated = api.CreateDataset("myDatasetName", typeof(MyObject1), typeof(MyObject2), ...);
+});
+```
+
+**Insert a data in a table**
+```csharp
+PowerBIClient.Do(api => {
+	var isObjectInsert = api.Insert("myDatasetId", new MyObject1
+	{
+		DateTimeProp = DateTime.Now,
+		IntProp = 1,
+		BooleanProp = true,
+		StringProp = "a string !",
+		DoubleProp = 1.1
+	});
+});
+```
+
+**Insert a list of datas in a table**
+```csharp
+PowerBIClient.Do(api => {
+	var isListInsert = api.InsertAll("myDatasetId", new List<object>
+	{
+		new MyObject1
+		{
+			DateTimeProp = DateTime.Now,
+			IntProp = 1,
+			BooleanProp = true,
+			StringProp = "a string !",
+			DoubleProp = 1.1
+		},
+		new MyObject1
+		{
+			DateTimeProp = DateTime.Now,
+			IntProp = 2,
+			BooleanProp = false,
+			StringProp = "a string !",
+			DoubleProp = 2.1
+		}
+	});
+});
+```
+
+**Delete all datas in a table**
+```csharp
+PowerBIClient.Do(api => {
+	var isDelete = api.Delete<Product>(datasetId);
+});
+```
+
+
+
 ## Licence
 
 The MIT License (MIT)
