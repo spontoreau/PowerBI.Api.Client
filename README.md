@@ -13,8 +13,8 @@ PM> Install-Package PowerBI.Api.Client
 ## Features
 
   * Automatic OAuth2 authenticate.
-  * Dataset list
-  * Dataset & tables creation
+  * Datasets list
+  * Datasets & tables creation
   * Insert datas in tables
   * Delete all datas in tables
 
@@ -22,7 +22,7 @@ PM> Install-Package PowerBI.Api.Client
 
 ## Getting start
 
-To configure the PowerBI Client Api you must use the configuration section. Add it to the .config
+To configure the PowerBI Client Api you must use the configuration section. Add it to the .config :
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -139,8 +139,8 @@ PowerBIClient.Do(api => {
 
 
 ## More to come !
-PowerBI & PowerBI Api are preview product. They are actively develp by Microsoft.
-I hope they will add new features to the Rest api soon
+PowerBI & PowerBI Api are preview product. They are actively develop by Microsoft.
+I hope they will add new features to the Rest api soon :)
 
 
 
