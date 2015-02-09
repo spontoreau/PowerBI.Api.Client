@@ -23,6 +23,34 @@ PM> Install-Package PowerBI.Api.Client
 
 ## Getting start
 
+To configure the Client Api you must use Configuration section
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+	<configSections>
+		<section name="PowerBIConfiguration" type="PowerBI.Api.Client.Configuration.PowerBIConfiguration, PowerBI.Api.Client, Version=1.0.0.0"/>
+	</configSections>
+	<PowerBIConfiguration>
+	    <OAuth
+	      Authority="https://login.windows.net/common/oauth2/authorize" 
+	      Resource="https://analysis.windows.net/powerbi/api"
+	      Client="MyClientId" 
+      	  User="MyUserName" 
+      	  Password="MyPassword"/>
+	    <Api 
+	      Url="https://api.powerbi.com/beta/myorg/datasets" />
+	  </PowerBIConfiguration>
+</configuration>
+```
+
+Client is now ready. It's simple to use, call the Do method of PowerBIClient class to define an Action which use a connected instance.
+
+```csharp
+PowerBIClient.Do(api => {
+
+});
+```
 
 
 
