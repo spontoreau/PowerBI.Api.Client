@@ -7,9 +7,9 @@ Client library to deal with PowerBI Rest Api.
 
 ## Installation
 
-'''
+```
 PM> Install-Package PowerBI.Api.Client
-'''
+```
 
 ## Licence
 
