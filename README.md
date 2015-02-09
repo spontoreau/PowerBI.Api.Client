@@ -12,15 +12,15 @@ PM> Install-Package PowerBI.Api.Client
 
 ## Features
 
-  * Automatic OAuth2 authenticate.
-  * Datasets list
+  * Automatic OAuth2 authentication
+  * Datasets listing
   * Datasets & tables creation
-  * Insert datas in tables
-  * Delete all datas in tables
+  * Insert data into tables
+  * Clean data from tables
 
 
 
-## Getting start
+## Getting started
 
 To configure the PowerBI Client Api you must use the configuration section. Add it to the .config :
 
@@ -43,7 +43,7 @@ To configure the PowerBI Client Api you must use the configuration section. Add 
 </configuration>
 ```
 
-Client is now ready. It's simple to use, call the **Do** method of **PowerBIClient** class to define an action which use a connected instance.
+Client is now ready. It's simple to use, call the **Do** method of **PowerBIClient** class to define an action which uses an authenticated instance.
 
 ```csharp
 PowerBIClient.Do(api => {
@@ -69,31 +69,31 @@ PowerBIClient.Do(api => {
 });
 ```
 
-**Determine if a Dataset corresponding to a name exists**
+**Check if a name matches with a registered Dataset **
 ```csharp
 PowerBIClient.Do(api => {
 	var isDatasetExist = api.IsDatasetExist("myDatasetName");
 });
 ```
 
-**Determine if a Dataset corresponding to an identifier exists**
+**Check if an identifier matches with a registered Dataset**
 ```csharp
 PowerBIClient.Do(api => {
-	var isDatasetIdExist = api.IsDatasetIdExist("myDatasetId");
+	var isDatasetIdExist = api.IsDatasetIdExist("XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX");
 });
 ```
 
-**Create a Dataset and the associate tables**
+**Create a Dataset and its related tables**
 ```csharp
 PowerBIClient.Do(api => {
 	var isCreated = api.CreateDataset("myDatasetName", typeof(MyObject1), typeof(MyObject2), ...);
 });
 ```
 
-**Insert a data in a table**
+**Insert a data into a table**
 ```csharp
 PowerBIClient.Do(api => {
-	var isObjectInsert = api.Insert("myDatasetId", new MyObject1
+	var isObjectInsert = api.Insert("XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX", new MyObject1
 	{
 		DateTimeProp = DateTime.Now,
 		IntProp = 1,
@@ -104,10 +104,10 @@ PowerBIClient.Do(api => {
 });
 ```
 
-**Insert a list of datas in a table**
+**Insert a list of data into a table**
 ```csharp
 PowerBIClient.Do(api => {
-	var isListInsert = api.InsertAll("myDatasetId", new List<object>
+	var isListInsert = api.InsertAll("XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX", new List<object>
 	{
 		new MyObject1
 		{
@@ -129,17 +129,17 @@ PowerBIClient.Do(api => {
 });
 ```
 
-**Delete all datas in a table**
+**Clean a table**
 ```csharp
 PowerBIClient.Do(api => {
-	var isDelete = api.Delete<Product>(datasetId);
+	var isDelete = api.Delete<Product>("XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX");
 });
 ```
 
 
 
 ## More to come !
-PowerBI & PowerBI Api are preview product. They are actively develop by Microsoft.
+PowerBI & PowerBI Api are preview products. They are actively developed by Microsoft.
 I hope they will add new features to the Rest api soon :)
 
 
