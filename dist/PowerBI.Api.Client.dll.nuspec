@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>PowerBI.Api.Client</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>PowerBI Api client</title>
     <authors>Sylvain PONTOREAU</authors>
     <owners>Sylvain PONTOREAU</owners>
@@ -22,6 +22,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="PowerBI.Api.Client.dll" target="lib/net45" /> 
+    <file src="PowerBI.Api.Client.dll" target="lib\net45" /> 
   </files>
 </package>
