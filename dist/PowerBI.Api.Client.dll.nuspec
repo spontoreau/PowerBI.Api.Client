@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package >
   <metadata>
-    <id>PowerBI.Api.Client.dll</id>
+    <id>PowerBI.Api.Client</id>
     <version>1.0.0</version>
+    <title>PowerBI Api client</title>
     <authors>Sylvain PONTOREAU</authors>
     <owners>Sylvain PONTOREAU</owners>
     <licenseUrl>https://github.com/Vtek/PowerBI.Api.Client/blob/master/LICENSE</licenseUrl>
@@ -20,4 +21,7 @@
       <dependency id="Newtonsoft.Json" version="6.0.8" />
     </dependencies>
   </metadata>
+  <files>
+    <file src="PowerBI.Api.Client.dll" target="lib/net45" /> 
+  </files>
 </package>
