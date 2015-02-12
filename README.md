@@ -22,7 +22,7 @@ PM> Install-Package PowerBI.Api.Client
 
 ## Getting started
 
-To configure the PowerBI Client Api you must use the configuration section. Add it to the .config :
+To configure the PowerBI Api Client you must use the configuration section. Add it to the .config :
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
