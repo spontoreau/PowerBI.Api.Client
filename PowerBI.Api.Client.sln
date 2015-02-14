@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerBI.Api.Client", "src\PowerBI.Api.Client\PowerBI.Api.Client.csproj", "{1D1D9270-F4EE-48F5-96C8-7326C9F95DA0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{61ADBA1B-2FEE-45DD-9D03-E136F04E4A25}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientExemple", "src\ClientExemple\ClientExemple.csproj", "{5D306411-9D6D-4684-AC5F-50531B32E896}"
 EndProject
 Global
@@ -19,5 +21,8 @@ Global
 		{5D306411-9D6D-4684-AC5F-50531B32E896}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D306411-9D6D-4684-AC5F-50531B32E896}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D306411-9D6D-4684-AC5F-50531B32E896}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5D306411-9D6D-4684-AC5F-50531B32E896} = {61ADBA1B-2FEE-45DD-9D03-E136F04E4A25}
 	EndGlobalSection
 EndGlobal
