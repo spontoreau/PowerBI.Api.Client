@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ClientExemple
+namespace ClassicClient
 {
 	public class Product
 	{
