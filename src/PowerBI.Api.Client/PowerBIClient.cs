@@ -26,13 +26,6 @@ namespace PowerBI.Api.Client
 		static readonly PowerBIConfiguration RootConfiguration;
 
 		/// <summary>
-		/// Initializes the <see cref="PowerBI.Api.Client.PowerBIClient"/> class.
-		/// </summary>
-		static PowerBIClient(){
-			RootConfiguration = (PowerBIConfiguration)ConfigurationManager.GetSection(typeof(PowerBIConfiguration).Name);
-		}
-
-		/// <summary>
 		/// Gets or sets the configuration.
 		/// </summary>
 		/// <value>The configuration.</value>
@@ -51,6 +44,15 @@ namespace PowerBI.Api.Client
 		string AccessToken { get; set; }
 
 		/// <summary>
+		/// Initializes the <see cref="PowerBI.Api.Client.PowerBIClient"/> class.
+		/// </summary>
+		static PowerBIClient(){
+			#if !PCL
+			RootConfiguration = (PowerBIConfiguration)ConfigurationManager.GetSection(typeof(PowerBIConfiguration).Name);
+			#endif
+		}
+
+		/// <summary>
 		/// Initializes a new instance of the PowerBI class.
 		/// </summary>
 		/// <param name="configuration">Configuration.</param>
@@ -59,6 +61,17 @@ namespace PowerBI.Api.Client
 			Configuration = configuration;
 		}
 
+		#if PCL
+		/// <summary>
+		/// Intialize the specified api and oAuth configuration.
+		/// </summary>
+		/// <param name="api">API.</param>
+		/// <param name="oAuth">O auth.</param>
+		public static void Intialize(PowerBI.Api.Client.Configuration.Api api, OAuth oAuth)
+		{
+			RootConfiguration = new PowerBIConfiguration { Api = api, OAuth = oAuth };
+		}
+		#endif
 
 		/// <summary>
 		/// Do the specified action.

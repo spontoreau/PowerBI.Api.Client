@@ -4,7 +4,7 @@ using System.Reflection;
 using PowerBI.Api.Client;
 using System.Collections.Generic;
 
-namespace ClientExemple
+namespace ClassicClient
 {
 	class MainClass
 	{

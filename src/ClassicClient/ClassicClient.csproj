@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5D306411-9D6D-4684-AC5F-50531B32E896}</ProjectGuid>
+    <ProjectGuid>{22BE40D2-8308-45DC-8B53-D47D5D43A892}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>ClientExemple</RootNamespace>
-    <AssemblyName>ClientExemple</AssemblyName>
+    <RootNamespace>ClassicClient</RootNamespace>
+    <AssemblyName>ClassicClient</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
