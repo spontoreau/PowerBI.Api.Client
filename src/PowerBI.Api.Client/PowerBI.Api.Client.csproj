@@ -48,29 +48,56 @@
     </Reference>
     <Reference Include="System.Configuration" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Configuration\Api.cs" />
-    <Compile Include="Configuration\OAuth.cs" />
-    <Compile Include="Http\WebApiClient.cs" />
-    <Compile Include="Model\Dataset.cs" />
-    <Compile Include="Model\DatasetCollection.cs" />
-    <Compile Include="Model\DatasetRows.cs" />
-    <Compile Include="Schema\ColumnSchema.cs" />
-    <Compile Include="Schema\TableSchema.cs" />
-    <Compile Include="Schema\SchemaBuilder.cs" />
-    <Compile Include="Schema\DatasetSchema.cs" />
-    <Compile Include="Configuration\PowerBIConfiguration.cs" />
-    <Compile Include="PowerBIClient.cs" />
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Properties\" />
     <Folder Include="Configuration\" />
+    <Folder Include="Http\" />
     <Folder Include="Model\" />
     <Folder Include="Schema\" />
-    <Folder Include="Http\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\PowerBI.Api.Client.Common\Configuration\Api.cs">
+      <Link>Configuration\Api.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Configuration\OAuth.cs">
+      <Link>Configuration\OAuth.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Configuration\PowerBIConfiguration.cs">
+      <Link>Configuration\PowerBIConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Http\WebApiClient.cs">
+      <Link>Http\WebApiClient.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Model\Dataset.cs">
+      <Link>Model\Dataset.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Model\DatasetCollection.cs">
+      <Link>Model\DatasetCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Model\DatasetRows.cs">
+      <Link>Model\DatasetRows.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Schema\ColumnSchema.cs">
+      <Link>Schema\ColumnSchema.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Schema\DatasetSchema.cs">
+      <Link>Schema\DatasetSchema.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Schema\SchemaBuilder.cs">
+      <Link>Schema\SchemaBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Schema\TableSchema.cs">
+      <Link>Schema\TableSchema.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\PowerBIClient.cs">
+      <Link>PowerBIClient.cs</Link>
+    </Compile>
   </ItemGroup>
 </Project>

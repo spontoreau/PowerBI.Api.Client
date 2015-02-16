@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{6C79BBA8-E5AF-4058-B046-6E165CD6A14C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>PowerBI.Api.Client.PCL</RootNamespace>
+    <AssemblyName>PowerBI.Api.Client.PCL</AssemblyName>
+    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;PCL;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <DefineConstants>PCL;</DefineConstants>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Properties\" />
+    <Folder Include="Configuration\" />
+    <Folder Include="Http\" />
+    <Folder Include="Model\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\PowerBI.Api.Client.Common\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\PowerBIClient.cs">
+      <Link>PowerBIClient.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Configuration\Api.cs">
+      <Link>Configuration\Api.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Configuration\OAuth.cs">
+      <Link>Configuration\OAuth.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Configuration\PowerBIConfiguration.cs">
+      <Link>Configuration\PowerBIConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Http\WebApiClient.cs">
+      <Link>Http\WebApiClient.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Model\Dataset.cs">
+      <Link>Model\Dataset.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Model\DatasetCollection.cs">
+      <Link>Model\DatasetCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Model\DatasetRows.cs">
+      <Link>Model\DatasetRows.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.8\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
+      <HintPath>..\..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.0.110281957-alpha\lib\portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

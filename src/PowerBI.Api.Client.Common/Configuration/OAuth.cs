@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿#if !PCL
+using System.Configuration;
+#endif
 
 namespace PowerBI.Api.Client.Configuration
 {
