@@ -23,7 +23,7 @@ namespace XamarinClient
 			var button = new Button
 			{
 				VerticalOptions = LayoutOptions.Center,
-				Text = "Connect",
+				Text = "Insert",
 				IsEnabled = false
 			};
 			button.SetBinding<MainViewModel>(Button.CommandProperty, vm => vm.InsertCommand);
