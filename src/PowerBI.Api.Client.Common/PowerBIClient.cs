@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using PowerBI.Api.Client.Configuration;
 using PowerBI.Api.Client.Http;
 using PowerBI.Api.Client.Model;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+
+#if !PCL
 using PowerBI.Api.Client.Schema;
+using System.Configuration;
+#else
+using System.Threading.Tasks;
+#endif
 
 namespace PowerBI.Api.Client
 {
@@ -23,7 +28,11 @@ namespace PowerBI.Api.Client
 		/// <summary>
 		/// The root configuration.
 		/// </summary>
+		#if !PCL
 		static readonly PowerBIConfiguration RootConfiguration;
+		#else
+		static PowerBIConfiguration RootConfiguration;
+		#endif
 
 		/// <summary>
 		/// Gets or sets the configuration.
@@ -120,11 +129,24 @@ namespace PowerBI.Api.Client
 				AuthenticationContext = new AuthenticationContext(Configuration.OAuth.Authority, tokenCache);
 			}
 
+			//For PCL we need to use the ADAL 3.O alpha. Because this version isn't a release we use compilation 
+			//condition to not use it in the classic version (PCL version of the PowerBI.Api.Client is also a Pre-Release)
+			//We use synchronous call (We be change in the next version of the library)
+			#if !PCL
 			var authResult = string.IsNullOrEmpty(AccessToken) 
 				? AuthenticationContext.AcquireToken(Configuration.OAuth.Resource,Configuration.OAuth.Client, new UserCredential(Configuration.OAuth.User, Configuration.OAuth.Password))
 				: AuthenticationContext.AcquireTokenSilent(Configuration.OAuth.Resource, Configuration.OAuth.Client);
 
 			AccessToken = authResult.AccessToken;
+			#else
+
+			var task = string.IsNullOrEmpty(AccessToken) 
+				? AuthenticationContext.AcquireTokenAsync(Configuration.OAuth.Resource,Configuration.OAuth.Client, new UserCredential(Configuration.OAuth.User, Configuration.OAuth.Password))	
+				: AuthenticationContext.AcquireTokenSilentAsync(Configuration.OAuth.Resource, Configuration.OAuth.Client);	
+			Task.WaitAll(task);
+			AccessToken = task.Result.AccessToken;
+
+			#endif
 		}
 
 		/// <summary>
@@ -178,8 +200,12 @@ namespace PowerBI.Api.Client
 		/// <param name="types">Types.</param>
 		public bool CreateDataset(string datasetName, params Type[] types)
 		{
+			#if !PCL
 			return new WebApiClient(AccessToken)
 				.Post(Configuration.Api.Url, SchemaBuilder.GetDataset(datasetName, ref types));
+			#else
+			throw new NotImplementedException("Dataset creation isn't implement in PCL version of PowerBI.Api.Client");
+			#endif
 		}
 
 		/// <summary>
