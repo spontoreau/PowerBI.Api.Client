@@ -4,6 +4,7 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace XamarinClient.iOS
 {
@@ -13,6 +14,8 @@ namespace XamarinClient.iOS
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
 			global::Xamarin.Forms.Forms.Init();
+
+			AdalInitializer.Initialize();
 
 			LoadApplication(new App());
 

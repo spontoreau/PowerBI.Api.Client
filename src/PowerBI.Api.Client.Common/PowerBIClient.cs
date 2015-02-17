@@ -139,7 +139,6 @@ namespace PowerBI.Api.Client
 
 			AccessToken = authResult.AccessToken;
 			#else
-
 			var task = string.IsNullOrEmpty(AccessToken) 
 				? AuthenticationContext.AcquireTokenAsync(Configuration.OAuth.Resource,Configuration.OAuth.Client, new UserCredential(Configuration.OAuth.User, Configuration.OAuth.Password))	
 				: AuthenticationContext.AcquireTokenSilentAsync(Configuration.OAuth.Resource, Configuration.OAuth.Client);	
