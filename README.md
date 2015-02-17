@@ -144,6 +144,11 @@ I hope they will add new features to the Rest api soon :)
 
 
 
+##Mobile development
+A PCL version exists for use PowerBI Api on mobile. This version is unstable and actually don't work because of ADAL V3.0 alpha problems. For more informations, check the wiki page : [PCL](https://github.com/Vtek/PowerBI.Api.Client/wiki/PCL)
+
+
+
 ## Licence
 
 The MIT License (MIT)
