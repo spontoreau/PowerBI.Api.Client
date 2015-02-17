@@ -138,7 +138,7 @@ PowerBIClient.Do(api => {
 
 
 
-##Use PowerBI.Api.Client with Xamarin
+##PowerBI.Api.Client with Xamarin
 A PCL version exists for use PowerBI Api on Xamarin.iOS & Xamarin.Forms (Android come soon). This version is unstable, for more informations, check the wiki page : [PCL](https://github.com/Vtek/PowerBI.Api.Client/wiki/PCL).
 
 
