@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>PowerBI.Api.Client.ADAL.PCL</id>
+    <version>1.0.0-alpha</version>
+    <title>PowerBI Api client Active Directory Azure Library</title>
+    <authors>Sylvain PONTOREAU</authors>
+    <owners>Sylvain PONTOREAU</owners>
+    <licenseUrl>https://github.com/Vtek/PowerBI.Api.Client/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Vtek/PowerBI.Api.Client</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>PowerBI Api client Active Directory Azure Library</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright © PONTOREAU Sylvain 2015</copyright>
+    <tags>PowerBI</tags>
+  </metadata>
+  <files>
+    <file src="ADAL\Microsoft.IdentityModel.Clients.ActiveDirectory" target="lib\PCL" /> 
+  </files>
+</package>

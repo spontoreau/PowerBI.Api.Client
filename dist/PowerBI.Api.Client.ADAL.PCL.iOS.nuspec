@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package >
   <metadata>
-    <id>PowerBI.Api.Client</id>
-    <version>1.0.2</version>
-    <title>PowerBI Api client</title>
+    <id>PowerBI.Api.Client.ADAL.PCL.iOS</id>
+    <version>1.0.0-alpha</version>
+    <title>PowerBI Api client Active Directory Azure Library for iOS device</title>
     <authors>Sylvain PONTOREAU</authors>
     <owners>Sylvain PONTOREAU</owners>
     <licenseUrl>https://github.com/Vtek/PowerBI.Api.Client/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/Vtek/PowerBI.Api.Client</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>PowerBI client api</description>
+    <description>PowerBI Api client Active Directory Azure Library for iOS device</description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright © PONTOREAU Sylvain 2015</copyright>
     <tags>PowerBI</tags>
     <dependencies>
-      <dependency id="Microsoft.Bcl" version="1.1.9" />
-      <dependency id="Microsoft.Bcl.Build" version="1.0.14" />
-      <dependency id="Microsoft.IdentityModel.Clients.ActiveDirectory" version="2.14.201151115" />
-      <dependency id="Microsoft.Net.Http" version="2.2.28" />
-      <dependency id="Newtonsoft.Json" version="6.0.8" />
+      <dependency id="PowerBI.Api.Client.ADAL.PCL" version="1.0.0" />
     </dependencies>
   </metadata>
   <files>
-    <file src="Classic\PowerBI.Api.Client.dll" target="lib\net45" /> 
+    <file src="ADAL\iOS\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll" target="lib\PCL" /> 
   </files>
 </package>
