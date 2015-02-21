@@ -15,6 +15,6 @@
     <tags>PowerBI</tags>
   </metadata>
   <files>
-    <file src="ADAL\Microsoft.IdentityModel.Clients.ActiveDirectory" target="lib\PCL" /> 
+    <file src="ADAL\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" target="lib\PCL" /> 
   </files>
 </package>
