@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>PowerBI.Api.Client.ADAL.PCL</id>
-    <version>1.0.0-alpha</version>
+    <version>1.0.1-alpha</version>
     <title>PowerBI Api client Active Directory Azure Library</title>
     <authors>Sylvain PONTOREAU</authors>
     <owners>Sylvain PONTOREAU</owners>
@@ -13,8 +13,10 @@
     <releaseNotes></releaseNotes>
     <copyright>Copyright © PONTOREAU Sylvain 2015</copyright>
     <tags>PowerBI</tags>
+    <dependencies>
+    </dependencies>
   </metadata>
   <files>
-    <file src="ADAL\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" target="lib\PCL" /> 
+    <file src="ADAL/Microsoft.IdentityModel.Clients.ActiveDirectory.dll" target="lib" /> 
   </files>
 </package>
