@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>PowerBI.Api.Client.ADAL.PCL.iOS</id>
-    <version>1.0.0-alpha</version>
+    <version>1.0.1-alpha</version>
     <title>PowerBI Api client Active Directory Azure Library for iOS device</title>
     <authors>Sylvain PONTOREAU</authors>
     <owners>Sylvain PONTOREAU</owners>
@@ -14,10 +14,10 @@
     <copyright>Copyright © PONTOREAU Sylvain 2015</copyright>
     <tags>PowerBI</tags>
     <dependencies>
-      <dependency id="PowerBI.Api.Client.ADAL.PCL" version="1.0.0" />
+      <dependency id="PowerBI.Api.Client.ADAL.PCL" version="1.0.1-alpha" />
     </dependencies>
   </metadata>
   <files>
-    <file src="ADAL\iOS\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll" target="lib\PCL" /> 
+    <file src="ADAL/iOS/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll" target="lib" /> 
   </files>
 </package>
