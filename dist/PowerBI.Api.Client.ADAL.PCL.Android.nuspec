@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>PowerBI.Api.Client.ADAL.PCL.Android</id>
+    <version>1.0.1-alpha</version>
+    <title>PowerBI Api client Active Directory Azure Library for Android device</title>
+    <authors>Sylvain PONTOREAU</authors>
+    <owners>Sylvain PONTOREAU</owners>
+    <licenseUrl>https://github.com/Vtek/PowerBI.Api.Client/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Vtek/PowerBI.Api.Client</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>PowerBI Api client Active Directory Azure Library for Android device</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright © PONTOREAU Sylvain 2015</copyright>
+    <tags>PowerBI</tags>
+    <dependencies>
+      <dependency id="PowerBI.Api.Client.ADAL.PCL" version="1.0.1-alpha" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="ADAL/Android/Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll" target="lib" /> 
+  </files>
+</package>
