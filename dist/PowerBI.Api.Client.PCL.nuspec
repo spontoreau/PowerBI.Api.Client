@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>PowerBI.Api.Client.PCL</id>
-    <version>1.0.1-alpha</version>
+    <version>1.0.2-alpha</version>
     <title>PowerBI Api client (PCL)</title>
     <authors>Sylvain PONTOREAU</authors>
     <owners>Sylvain PONTOREAU</owners>
