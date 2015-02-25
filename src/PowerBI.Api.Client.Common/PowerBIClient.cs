@@ -76,7 +76,7 @@ namespace PowerBI.Api.Client
 		/// </summary>
 		/// <param name="api">API.</param>
 		/// <param name="oAuth">O auth.</param>
-		public static void Intialize(PowerBI.Api.Client.Configuration.Api api, OAuth oAuth)
+		public static void Initialize(PowerBI.Api.Client.Configuration.Api api, OAuth oAuth)
 		{
 			RootConfiguration = new PowerBIConfiguration { Api = api, OAuth = oAuth };
 		}
