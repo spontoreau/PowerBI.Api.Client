@@ -159,7 +159,7 @@ namespace PowerBI.Api.Client
 		}
 
 		/// <summary>
-		/// Gets the dataset identifier.
+		/// Get Dataset identifier by name.
 		/// </summary>
 		/// <returns>The dataset identifier.</returns>
 		/// <param name="datasetName">Dataset name.</param>
@@ -170,7 +170,7 @@ namespace PowerBI.Api.Client
 		}
 
 		/// <summary>
-		/// Determines if a dataset exist
+		/// Check if a name matches with a registered Dataset
 		/// </summary>
 		/// <returns><c>true</c> if this instance if the dataset exist; otherwise, <c>false</c>.</returns>
 		/// <param name="datasetName">Dataset name.</param>
@@ -181,7 +181,7 @@ namespace PowerBI.Api.Client
 		}
 
 		/// <summary>
-		/// Determines if a dataset exist
+		/// Check if an identifier matches with a registered Dataset
 		/// </summary>
 		/// <returns><c>true</c> if this instance if the dataset exist; otherwise, <c>false</c>.</returns>
 		/// <param name="datasetId">Dataset Identifier.</param>
@@ -192,7 +192,7 @@ namespace PowerBI.Api.Client
 		}
 
 		/// <summary>
-		/// Creates the dataset.
+		/// Create a Dataset and its related tables
 		/// </summary>
 		/// <returns><c>true</c>, if dataset was created, <c>false</c> otherwise.</returns>
 		/// <param name="datasetName">Dataset name.</param>
@@ -208,7 +208,7 @@ namespace PowerBI.Api.Client
 		}
 
 		/// <summary>
-		/// Insert the specified obj in the corresponding dataset.
+		/// Insert a data into a table
 		/// </summary>
 		/// <param name="datasetId">Dataset identifier.</param>
 		/// <param name="obj">Object.</param>
@@ -219,7 +219,7 @@ namespace PowerBI.Api.Client
 		}
 
 		/// <summary>
-		/// Insert all the specified obj in the corresponding dataset.
+		/// Insert a list of data into a table
 		/// </summary>
 		/// <returns><c>true</c>, if all was inserted, <c>false</c> otherwise.</returns>
 		/// <param name="datasetId">Dataset identifier.</param>
@@ -234,7 +234,7 @@ namespace PowerBI.Api.Client
 		}
 
 		/// <summary>
-		/// Delete all the rows corresponding to a T type and a datasetId.
+		/// Clean a table
 		/// </summary>
 		/// <param name="datasetId">Dataset identifier.</param>
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
