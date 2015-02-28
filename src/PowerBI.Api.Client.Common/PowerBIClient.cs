@@ -234,7 +234,7 @@ namespace PowerBI.Api.Client
 		}
 
 		/// <summary>
-		/// Clean a table
+		/// Clear a table
 		/// </summary>
 		/// <param name="datasetId">Dataset identifier.</param>
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
