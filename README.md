@@ -2,6 +2,7 @@ PowerBI.Api.Client
 =======
 
 C# Client library to deal with PowerBI REST Api : [MSDN DOCUMENTATION](https://msdn.microsoft.com/en-us/library/dn877544)
+
 Check out the article on TechNet Wiki : [TechNet Wiki - PowerBI API in .Net](http://social.technet.microsoft.com/wiki/contents/articles/30105.powerbi-api-in-net-en-us.aspx)
 
 
