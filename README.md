@@ -1,7 +1,8 @@
 PowerBI.Api.Client
 =======
 
-C# Client library to deal with PowerBI Rest Api : [MSDN DOCUMENTATION](https://msdn.microsoft.com/en-us/library/dn877544)
+C# Client library to deal with PowerBI REST Api : [MSDN DOCUMENTATION](https://msdn.microsoft.com/en-us/library/dn877544)
+Check out the article on TechNet Wiki : [TechNet Wiki - PowerBI API in .Net](http://social.technet.microsoft.com/wiki/contents/articles/30105.powerbi-api-in-net-en-us.aspx)
 
 
 ## Installation
@@ -139,13 +140,7 @@ PowerBIClient.Do(api => {
 
 
 ##PowerBI.Api.Client with Xamarin
-A PCL version exists for use PowerBI Api on Xamarin.iOS & Xamarin.Forms (Android come soon). This version is unstable, for more informations check the wiki page : [PCL](https://github.com/Vtek/PowerBI.Api.Client/wiki/PCL).
-
-
-
-## More to come !
-PowerBI & PowerBI Api are preview products. They are actively developed by Microsoft.
-I hope they will add new features to the Rest api soon :)
+A PCL version exists for use PowerBI Api on Xamarin.iOS & Xamarin.Forms (Android come soon). This version is unstable, for more informations check the wiki page : [PCL](https://github.com/Vtek/PowerBI.Api.Client/wiki/PCL). More documenation on this part available soon !
 
 
 
