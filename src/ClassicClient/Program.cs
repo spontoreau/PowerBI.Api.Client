@@ -19,7 +19,7 @@ namespace ClassicClient
 			try
 			{
 				PowerBIClient.Do(api => {
-					var isCreated = api.CreateDataset(DatasetName, typeof(Product));
+					var isCreated = api.CreateDataset(DatasetName, true, typeof(Product));
 
 					if(isCreated)
 					{
