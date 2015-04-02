@@ -196,12 +196,13 @@ namespace PowerBI.Api.Client
 		/// </summary>
 		/// <returns><c>true</c>, if dataset was created, <c>false</c> otherwise.</returns>
 		/// <param name="datasetName">Dataset name.</param>
+		/// <param name="useRetentionPolicy">Optional, </param> 
 		/// <param name="types">Types.</param>
-		public bool CreateDataset(string datasetName, params Type[] types)
+		public bool CreateDataset(string datasetName, bool useRetentionPolicy = false, params Type[] types)
 		{
 			#if !PCL
 			return new WebApiClient(AccessToken)
-				.Post(Configuration.Api.Url, SchemaBuilder.GetDataset(datasetName, ref types));
+				.Post(useRetentionPolicy ? string.Format("{0}?defaultRetentionPolicy=basicFIFO", Configuration.Api.Url) : Configuration.Api.Url, SchemaBuilder.GetDataset(datasetName, ref types));
 			#else
 			throw new NotImplementedException("Dataset creation isn't implement in PCL version of PowerBI.Api.Client");
 			#endif
