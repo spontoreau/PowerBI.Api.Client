@@ -198,7 +198,7 @@ namespace PowerBI.Api.Client
 		/// <param name="datasetName">Dataset name.</param>
 		/// <param name="useRetentionPolicy">Optional, </param> 
 		/// <param name="types">Types.</param>
-		public bool CreateDataset(string datasetName, bool useRetentionPolicy = false, params Type[] types)
+		public bool CreateDataset(string datasetName, bool useRetentionPolicy, params Type[] types)
 		{
 			#if !PCL
 			return new WebApiClient(AccessToken)
