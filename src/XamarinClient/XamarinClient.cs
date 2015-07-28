@@ -11,18 +11,13 @@ namespace XamarinClient
 		public App()
 		{
 			PowerBIClient.Initialize(
-				new Api 
-				{
-					Url = "https://api.powerbi.com/beta/myorg/datasets"
-				}, 
-				new OAuth 
-				{ 
-					Authority = "https://login.windows.net/common/oauth2/authorize",
-					Resource = "https://analysis.windows.net/powerbi/api",
-					Client = "MyClientId",
-					User = "MyUser",
-					Password ="MyPassword"
-				});
+					"https://api.powerbi.com/beta/myorg/datasets",
+					"https://login.windows.net/common/oauth2/authorize",
+					"https://analysis.windows.net/powerbi/api",
+					"MyClientId",
+					"MyUser",
+					"MyPassword"
+			);
 
 			MainPage = new RootPage();
 		}

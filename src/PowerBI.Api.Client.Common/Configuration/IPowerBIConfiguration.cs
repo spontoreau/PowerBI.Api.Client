@@ -3,37 +3,37 @@
 	/// <summary>
 	/// PowerBI configuration.
 	/// </summary>
-	sealed class PowerBISimpleConfiguration : IPowerBIConfiguration
+	public interface IPowerBIConfiguration
 	{
 		/// <summary>
 		/// PowerBI Api url
 		/// </summary>
-		public string Url { get; set; }
+		string Url { get; }
 
 		/// <summary>
 		/// OAuth authority
 		/// </summary>
-		public string Authority { get; set; }
+		string Authority { get; }
 
 		/// <summary>
 		/// Resource for the token
 		/// </summary>
-		public string Resource { get; set; }
+		string Resource { get; }
 
 		/// <summary>
 		/// ClientId for the token
 		/// </summary>
-		public string Client { get; set; }
+		string Client { get; }
 
 		/// <summary>
 		/// User
 		/// </summary>
-		public string User { get; set; }
+		string User { get; }
 
 		/// <summary>
 		/// Password
 		/// </summary>
-		public string Password { get; set; }
+		string Password { get; }
 	}
 }
 

@@ -106,10 +106,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XamarinClient\XamarinClient.csproj">
-      <Project>{82AEB206-80B8-48C1-B358-C01A7E8BB365}</Project>
-      <Name>XamarinClient</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\lib\ADAL.PCL\ADAL.PCL.csproj">
       <Project>{94569420-69B5-4031-A975-F5791E3F2F17}</Project>
       <Name>ADAL.PCL</Name>

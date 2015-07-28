@@ -28,17 +28,13 @@ namespace PowerBI.Api.Client
 		/// <summary>
 		/// The root configuration.
 		/// </summary>
-		#if !PCL
-		static readonly PowerBIConfiguration RootConfiguration;
-		#else
-		static PowerBIConfiguration RootConfiguration;
-		#endif
+		static IPowerBIConfiguration RootConfiguration;
 
 		/// <summary>
 		/// Gets or sets the configuration.
 		/// </summary>
 		/// <value>The configuration.</value>
-		PowerBIConfiguration Configuration { get; set; }
+		IPowerBIConfiguration Configuration { get; set; }
 
 		/// <summary>
 		/// Gets or sets the authentication context.
@@ -53,34 +49,42 @@ namespace PowerBI.Api.Client
 		string AccessToken { get; set; }
 
 		/// <summary>
-		/// Initializes the <see cref="PowerBI.Api.Client.PowerBIClient"/> class.
-		/// </summary>
-		static PowerBIClient(){
-			#if !PCL
-			RootConfiguration = (PowerBIConfiguration)ConfigurationManager.GetSection(typeof(PowerBIConfiguration).Name);
-			#endif
-		}
-
-		/// <summary>
 		/// Initializes a new instance of the PowerBI class.
 		/// </summary>
 		/// <param name="configuration">Configuration.</param>
-		PowerBIClient(PowerBIConfiguration configuration)
+		PowerBIClient(IPowerBIConfiguration configuration)
 		{
 			Configuration = configuration;
 		}
-
-		#if PCL
+			
 		/// <summary>
-		/// Intialize the specified api and oAuth configuration.
+		/// Initialize the api.
 		/// </summary>
-		/// <param name="api">API.</param>
-		/// <param name="oAuth">O auth.</param>
-		public static void Initialize(PowerBI.Api.Client.Configuration.Api api, OAuth oAuth)
+		/// <param name="url">URL.</param>
+		/// <param name="authority">Authority.</param>
+		/// <param name="resource">Resource.</param>
+		/// <param name="client">Client.</param>
+		/// <param name="user">User.</param>
+		/// <param name="password">Password.</param>
+		public static void Initialize(string url, string authority, string resource, string client, string user, string password)
 		{
-			RootConfiguration = new PowerBIConfiguration { Api = api, OAuth = oAuth };
+			if(string.IsNullOrEmpty(url)) throw new ArgumentNullException("url");
+			if(string.IsNullOrEmpty(authority)) throw new ArgumentNullException("authority");
+			if(string.IsNullOrEmpty(resource)) throw new ArgumentNullException("resource");
+			if(string.IsNullOrEmpty(client)) throw new ArgumentNullException("client");
+			if(string.IsNullOrEmpty(user)) throw new ArgumentNullException("user");
+			if(string.IsNullOrEmpty(user)) throw new ArgumentNullException("password");
+
+			RootConfiguration = new PowerBISimpleConfiguration 
+			{
+				Url = url,
+				Authority = authority,
+				Client = client,
+				Resource = resource,
+				User = user,
+				Password = password
+			};
 		}
-		#endif
 
 		/// <summary>
 		/// Do the specified action.
@@ -104,6 +108,7 @@ namespace PowerBI.Api.Client
 			var api = Get();
 			api.Authenticate();
 			return function(api);
+
 		}
 
 		/// <summary>
@@ -123,10 +128,15 @@ namespace PowerBI.Api.Client
 		/// </summary>
 		void Authenticate()
 		{
+			#if !PCL
+			if(RootConfiguration == null)
+				RootConfiguration = (PowerBIConfiguration)ConfigurationManager.GetSection(typeof(PowerBIConfiguration).Name);
+			#endif
+
 			if (AuthenticationContext == null)
 			{
 				var tokenCache = new TokenCache();
-				AuthenticationContext = new AuthenticationContext(Configuration.OAuth.Authority, tokenCache);
+				AuthenticationContext = new AuthenticationContext(Configuration.Authority, tokenCache);
 			}
 
 			//For PCL we need to use the ADAL 3.O alpha. Because this version isn't a release we use compilation 
@@ -134,14 +144,14 @@ namespace PowerBI.Api.Client
 			//We use synchronous call (We be change in the next version of the library)
 			#if !PCL
 			var authResult = string.IsNullOrEmpty(AccessToken) 
-				? AuthenticationContext.AcquireToken(Configuration.OAuth.Resource,Configuration.OAuth.Client, new UserCredential(Configuration.OAuth.User, Configuration.OAuth.Password))
-				: AuthenticationContext.AcquireTokenSilent(Configuration.OAuth.Resource, Configuration.OAuth.Client);
+				? AuthenticationContext.AcquireToken(Configuration.Resource,Configuration.Client, new UserCredential(Configuration.User, Configuration.Password))
+				: AuthenticationContext.AcquireTokenSilent(Configuration.Resource, Configuration.Client);
 
 			AccessToken = authResult.AccessToken;
 			#else
 			var task = string.IsNullOrEmpty(AccessToken) 
-				? AuthenticationContext.AcquireTokenAsync(Configuration.OAuth.Resource,Configuration.OAuth.Client, new UserCredential(Configuration.OAuth.User, Configuration.OAuth.Password))	
-				: AuthenticationContext.AcquireTokenSilentAsync(Configuration.OAuth.Resource, Configuration.OAuth.Client);	
+				? AuthenticationContext.AcquireTokenAsync(Configuration.Resource,Configuration.Client, new UserCredential(Configuration.User, Configuration.Password))	
+				: AuthenticationContext.AcquireTokenSilentAsync(Configuration.Resource, Configuration.Client);	
 			Task.WaitAll(task);
 			AccessToken = task.Result.AccessToken;
 
@@ -155,7 +165,7 @@ namespace PowerBI.Api.Client
 		public IList<Dataset> GetDatasets()
 		{
 			return new WebApiClient(AccessToken)
-				.Get<DatasetCollection>(Configuration.Api.Url).Datasets;
+				.Get<DatasetCollection>(Configuration.Url).Datasets;
 		}
 
 		/// <summary>
@@ -202,7 +212,7 @@ namespace PowerBI.Api.Client
 		{
 			#if !PCL
 			return new WebApiClient(AccessToken)
-				.Post(useRetentionPolicy ? string.Format("{0}?defaultRetentionPolicy=basicFIFO", Configuration.Api.Url) : Configuration.Api.Url, SchemaBuilder.GetDataset(datasetName, ref types));
+				.Post(useRetentionPolicy ? string.Format("{0}?defaultRetentionPolicy=basicFIFO", Configuration.Url) : Configuration.Url, SchemaBuilder.GetDataset(datasetName, ref types));
 			#else
 			throw new NotImplementedException("Dataset creation isn't implement in PCL version of PowerBI.Api.Client");
 			#endif
@@ -253,7 +263,7 @@ namespace PowerBI.Api.Client
 		/// <param name="type">Type.</param>
 		string GetUrl(string datasetId, Type type)
 		{
-			return string.Format("{0}/{1}/tables/{2}/rows", Configuration.Api.Url, datasetId, type.Name);
+			return string.Format("{0}/{1}/tables/{2}/rows", Configuration.Url, datasetId, type.Name);
 		}
 	}
 }

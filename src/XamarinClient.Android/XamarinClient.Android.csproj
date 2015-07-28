@@ -89,9 +89,5 @@
       <Project>{0C5100D0-54F2-4075-B604-DDE15DA218D5}</Project>
       <Name>ADAL.PCL.Android</Name>
     </ProjectReference>
-    <ProjectReference Include="..\XamarinClient\XamarinClient.csproj">
-      <Project>{82AEB206-80B8-48C1-B358-C01A7E8BB365}</Project>
-      <Name>XamarinClient</Name>
-    </ProjectReference>
   </ItemGroup>
 </Project>

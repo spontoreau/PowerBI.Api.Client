@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using PowerBI.Api.Client;
 using System.Collections.Generic;
+using PowerBI.Api.Client.Configuration;
 
 namespace ClassicClient
 {
@@ -18,6 +19,8 @@ namespace ClassicClient
 
 			try
 			{
+				//PowerBIClient.Initialize("myUrl", "myAuthority", "myResource", "myClient", "myUser", "myPassword");
+
 				PowerBIClient.Do(api => {
 					var isCreated = api.CreateDataset(DatasetName, true, typeof(Product));
 
