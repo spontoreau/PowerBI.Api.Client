@@ -24,7 +24,7 @@ PM> Install-Package PowerBI.Api.Client
 
 ## Getting started
 
-To configure the PowerBI Api Client you must use the configuration section. Add it to the .config :
+To configure the PowerBI Api Client you can use the configuration section. Just add it to the .config :
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -43,6 +43,12 @@ To configure the PowerBI Api Client you must use the configuration section. Add 
 	      Url="https://api.powerbi.com/beta/myorg/datasets" />
 	  </PowerBIConfiguration>
 </configuration>
+```
+
+You can also initialize the configuration by code (The configuration section is use by default if Initialize is not call) : 
+
+```csharp
+PowerBIClient.Initialize("myUrl", "myAuthority", "myResource", "myClient", "myUser", "myPassword");
 ```
 
 The client is now ready. It's easy to use, call the **Do** method of **PowerBIClient** class to define an action which uses an authenticated instance.
