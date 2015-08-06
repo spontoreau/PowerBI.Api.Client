@@ -40,7 +40,7 @@ To configure the PowerBI Api Client you can use the configuration section. Just 
       	  User="MyUserName" 
       	  Password="MyPassword"/>
 	    <Api 
-	      Url="https://api.powerbi.com/beta/myorg/datasets" />
+	      Url="https://api.powerbi.com/v1.0/myorg" />
 	  </PowerBIConfiguration>
 </configuration>
 ```
