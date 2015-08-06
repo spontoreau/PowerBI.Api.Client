@@ -165,7 +165,18 @@ namespace PowerBI.Api.Client
 		public IList<Dataset> GetDatasets()
 		{
 			return new WebApiClient(AccessToken)
-				.Get<DatasetCollection>(Configuration.Url).Datasets;
+				.Get<DatasetCollection>(GetDatasetUrl()).Value;
+		}
+
+		/// <summary>
+		/// Gets the tables.
+		/// </summary>
+		/// <returns>The tables.</returns>
+		/// <param name="datasetId">Dataset identifier.</param>
+		public IList<Table> GetTables(string datasetId)
+		{
+			return new WebApiClient(AccessToken)
+				.Get<TableCollection>(GetTableUrl(datasetId)).Tables;
 		}
 
 		/// <summary>
@@ -211,10 +222,21 @@ namespace PowerBI.Api.Client
 		public bool CreateDataset(string datasetName, bool useRetentionPolicy, params Type[] types)
 		{
 			#if !PCL
+
 			return new WebApiClient(AccessToken)
-				.Post(useRetentionPolicy ? string.Format("{0}?defaultRetentionPolicy=basicFIFO", Configuration.Url) : Configuration.Url, SchemaBuilder.GetDataset(datasetName, ref types));
+				.Post(string.Format("{0}/dataset?defaultRetentionPolicy={1}", Configuration.Url, useRetentionPolicy ? "basicFIFO" : "none"), SchemaBuilder.GetDataset(datasetName, ref types));
 			#else
 			throw new NotImplementedException("Dataset creation isn't implement in PCL version of PowerBI.Api.Client");
+			#endif
+		}
+
+		public bool UpdateTable(string datasetId, string tableName, Type type)
+		{
+			#if !PCL
+			return new WebApiClient(AccessToken)
+				.Put(GetTableUpdateUrl(datasetId, tableName), SchemaBuilder.GetTable(type));
+			#else
+			throw new NotImplementedException("Table update isn't implement in PCL version of PowerBI.Api.Client");
 			#endif
 		}
 
@@ -226,7 +248,7 @@ namespace PowerBI.Api.Client
 		public bool Insert(string datasetId, object obj)
 		{
 			return new WebApiClient(AccessToken)
-				.Post(GetUrl(datasetId, obj.GetType()), new DatasetRows { Rows = new List<object> { obj } });
+				.Post(GetTableRowsUrl(datasetId, obj.GetType()), new DatasetRows { Rows = new List<object> { obj } });
 		}
 
 		/// <summary>
@@ -241,7 +263,7 @@ namespace PowerBI.Api.Client
 				return false;
 				
 			return new WebApiClient(AccessToken)
-				.Post(GetUrl(datasetId, objs[0].GetType()), new DatasetRows { Rows = objs });
+				.Post(GetTableRowsUrl(datasetId, objs[0].GetType()), new DatasetRows { Rows = objs });
 		}
 
 		/// <summary>
@@ -252,7 +274,7 @@ namespace PowerBI.Api.Client
 		public bool Delete<T>(string datasetId)
 		{
 			return new WebApiClient(AccessToken)
-				.Delete(GetUrl(datasetId, typeof(T)));
+				.Delete(GetTableRowsUrl(datasetId, typeof(T)));
 		}
 
 		/// <summary>
@@ -261,9 +283,38 @@ namespace PowerBI.Api.Client
 		/// <returns>The insert URL.</returns>
 		/// <param name="datasetId">Dataset identifier.</param>
 		/// <param name="type">Type.</param>
-		string GetUrl(string datasetId, Type type)
+		string GetTableRowsUrl(string datasetId, Type type)
 		{
-			return string.Format("{0}/{1}/tables/{2}/rows", Configuration.Url, datasetId, type.Name);
+			return string.Format("{0}/datasets/{1}/tables/{2}/rows", Configuration.Url, datasetId, type.Name);
+		}
+
+		/// <summary>
+		/// Gets the table URL.
+		/// </summary>
+		/// <returns>The table URL.</returns>
+		/// <param name="datasetId">Dataset identifier.</param>
+		string GetTableUrl(string datasetId)
+		{
+			return string.Format("{0}/datasets/{1}/tables", Configuration.Url, datasetId);
+		}
+
+		/// <summary>
+		/// Gets the table URL.
+		/// </summary>
+		/// <returns>The table URL.</returns>
+		/// <param name="datasetId">Dataset identifier.</param>
+		string GetTableUpdateUrl(string datasetId, string tableName)
+		{
+			return string.Format("{0}/datasets/{1}/tables/{3}", Configuration.Url, datasetId, tableName);
+		}
+
+		/// <summary>
+		/// Gets the dataset URL.
+		/// </summary>
+		/// <returns>The dataset URL.</returns>
+		string GetDatasetUrl()
+		{
+			return string.Format("{0}/datasets", Configuration.Url);
 		}
 	}
 }

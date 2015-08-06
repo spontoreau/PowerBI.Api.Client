@@ -19,15 +19,23 @@ namespace ClassicClient
 
 			try
 			{
-				//PowerBIClient.Initialize("myUrl", "myAuthority", "myResource", "myClient", "myUser", "myPassword");
+				PowerBIClient.Initialize("https://api.powerbi.com/v1.0/myorg/dataset/", 
+										 "https://login.windows.net/common/oauth2/authorize", 
+										 "https://analysis.windows.net/powerbi/api", 
+										 "e24d4bbb-1c0a-4324-a0f8-08683084a3e0", 
+										 "test@DOMTechDays.onmicrosoft.com", 
+										 "Spo060492");
 
 				PowerBIClient.Do(api => {
+
+					var datasets = api.GetDatasets(); 
+
 					var isCreated = api.CreateDataset(DatasetName, true, typeof(Product));
 
 					if(isCreated)
 					{
 						Console.WriteLine("Dataset created");
-						var datasets = api.GetDatasets();
+
 						Console.WriteLine("Dataset avaible : {0}", datasets.Select(x => x.Name).Aggregate((current, next) => current + ", " + next));
 						var datasetId = api.GetDatasetId(DatasetName);
 						Console.WriteLine("Dataset Identifier for MyProductCatalog : {0}", datasetId);

@@ -2,16 +2,13 @@
 
 namespace PowerBI.Api.Client.Model
 {
-	/// <summary>
-	/// Dataset collection.
-	/// </summary>
-	public sealed class DatasetCollection
+	public sealed class GroupCollection
 	{
 		/// <summary>
 		/// Gets or sets the datasets.
 		/// </summary>
 		/// <value>The datasets.</value>
-		public List<Dataset> Value { get; set; }
+		public List<Dataset> Datasets { get; set; }
 	}
 }
 

@@ -16,6 +16,12 @@
 		/// </summary>
 		/// <value>The name.</value>
 		public string Name { get; set; }
+
+		/// <summary>
+		/// Gets or sets the default retention policy.
+		/// </summary>
+		/// <value>The default retention policy.</value>
+		public string DefaultRetentionPolicy { get; set; }
 	}
 }
 
