@@ -227,7 +227,7 @@ namespace PowerBI.Api.Client
 		/// <param name="client">Client.</param>
 		/// <param name="user">User.</param>
 		/// <param name="password">Password.</param>
-		public IPowerBIConfiguration GetConfiguration(string url, string authority, string resource, string client, string user, string password)
+		public static IPowerBIConfiguration GetConfiguration(string url, string authority, string resource, string client, string user, string password)
 		{
 			if(string.IsNullOrEmpty(url)) throw new ArgumentNullException("url");
 			if(string.IsNullOrEmpty(authority)) throw new ArgumentNullException("authority");
