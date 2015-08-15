@@ -5,6 +5,7 @@ using PowerBI.Api.Client.Configuration;
 using PowerBI.Api.Client.Http;
 using PowerBI.Api.Client.Model;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using System.Threading.Tasks;
 
 #if !PCL
 using PowerBI.Api.Client.Schema;
@@ -109,6 +110,18 @@ namespace PowerBI.Api.Client
 			api.Authenticate();
 			return function(api);
 
+		}
+
+		/// <summary>
+		/// Do the specified function asynchronously. 
+		/// </summary>
+		/// <returns>The async.</returns>
+		/// <param name="function">Function.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public async static Task<T> DoAsync<T>(Func<PowerBIClient, T> function)
+		{
+			//Lazy implementation...
+			return await Task.Run<T>(async() => Do<T>(function));
 		}
 
 		/// <summary>
