@@ -293,6 +293,16 @@ namespace PowerBI.Api.Client
 		}
 
 		/// <summary>
+		/// Gets all dataset.
+		/// </summary>
+		/// <returns>The all dataset.</returns>
+		public IList<Dataset> GetGroups()
+		{
+			return new WebApiClient(AccessToken)
+				.Get<GroupCollection>(Configuration.Url).Datasets;
+		}
+
+		/// <summary>
 		/// Gets the tables.
 		/// </summary>
 		/// <returns>The tables.</returns>
