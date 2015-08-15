@@ -9,7 +9,9 @@ Check out the article on TechNet Wiki : [TechNet Wiki - PowerBI API in .Net](htt
 ## Installation
 
 **/!\ Take care**
-Version 1.1 is obsolete. Please read the wiki page for v1.2 alpha : https://github.com/Vtek/PowerBI.Api.Client/wiki/Version-1.2-alpha
+
+Version 1.1 is obsolete. 
+Please read the wiki page for v1.2 alpha : https://github.com/Vtek/PowerBI.Api.Client/wiki/Version-1.2-alpha
 
 ```
 PM> Install-Package PowerBI.Api.Client -Pre
