@@ -10,8 +10,6 @@ using System.Threading.Tasks;
 #if !PCL
 using PowerBI.Api.Client.Schema;
 using System.Configuration;
-#else
-using System.Threading.Tasks;
 #endif
 
 namespace PowerBI.Api.Client
@@ -76,7 +74,7 @@ namespace PowerBI.Api.Client
 			if(string.IsNullOrEmpty(user)) throw new ArgumentNullException("user");
 			if(string.IsNullOrEmpty(user)) throw new ArgumentNullException("password");
 
-			RootConfiguration = new PowerBISimpleConfiguration 
+			Initialize(new PowerBISimpleConfiguration 
 			{
 				Url = url,
 				Authority = authority,
@@ -84,7 +82,17 @@ namespace PowerBI.Api.Client
 				Resource = resource,
 				User = user,
 				Password = password
-			};
+			});
+		}
+
+		/// <summary>
+		/// Initialize the specified powerBIConfiguration.
+		/// </summary>
+		/// <param name="powerBIConfiguration">Power BI configuration.</param>
+		public static void Initialize(IPowerBIConfiguration powerBIConfiguration)
+		{
+			if(powerBIConfiguration == null) throw new ArgumentNullException("powerBIConfiguration");
+			RootConfiguration = powerBIConfiguration;
 		}
 
 		/// <summary>
@@ -109,7 +117,6 @@ namespace PowerBI.Api.Client
 			var api = Get();
 			api.Authenticate();
 			return function(api);
-
 		}
 
 		/// <summary>
@@ -121,7 +128,69 @@ namespace PowerBI.Api.Client
 		public async static Task<T> DoAsync<T>(Func<PowerBIClient, T> function)
 		{
 			//Lazy implementation...
-			return await Task.Run<T>(async() => Do<T>(function));
+			return await Task.Run<T>(() => Do<T>(function));
+		}
+
+		/// <summary>
+		/// Do the specified function asynchronously. 
+		/// </summary>
+		/// <returns>The async.</returns>
+		/// <param name="action">Action.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public async static Task DoAsync<T>(Action<PowerBIClient> action)
+		{
+			//Lazy implementation...
+			await Task.Run(() => Do(action));
+		}
+
+		/// <summary>
+		/// Do the specified action for a specific configuration.
+		/// </summary>
+		/// <param name="action">Action.</param>
+		/// <param name="configuration">Configuration</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public static void Do(IPowerBIConfiguration configuration, Action<PowerBIClient> action)
+		{
+			var api = Get(configuration);
+			api.Authenticate();
+			action(api);
+		}
+
+		/// <summary>
+		/// Do the specified function for a specific configuration.
+		/// </summary>
+		/// <param name="function">Function.</param>
+		/// <param name="configuration">Configuration</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public static T Do<T>(IPowerBIConfiguration configuration, Func<PowerBIClient, T> function)
+		{
+			var api = Get(configuration);
+			api.Authenticate();
+			return function(api);
+		}
+
+		/// <summary>
+		/// Do the specified action for a specific configuration.
+		/// </summary>
+		/// <param name="action">Action.</param>
+		/// <param name="configuration">Configuration</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public async static Task DoAsync(IPowerBIConfiguration configuration, Action<PowerBIClient> action)
+		{
+			//Lazy implementation...
+			await Task.Run(() => Do(configuration, action));
+		}
+
+		/// <summary>
+		/// Do the specified function for a specific configuration.
+		/// </summary>
+		/// <param name="function">Function.</param>
+		/// <param name="configuration">Configuration</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public async static Task<T> DoAsync<T>(IPowerBIConfiguration configuration, Func<PowerBIClient, T> function)
+		{
+			//Lazy implementation...
+			return await Task.Run<T>(() => Do<T>(configuration, function));
 		}
 
 		/// <summary>
@@ -134,6 +203,48 @@ namespace PowerBI.Api.Client
 			{
 				return new PowerBIClient(RootConfiguration);
 			}
+		}
+
+		/// <summary>
+		/// Get a PowerBI instance corresponding to a configuration.
+		/// </summary>
+		/// 
+		static PowerBIClient Get(IPowerBIConfiguration powerBIConfiguration)
+		{
+			lock(SyncRoot)
+			{
+				return new PowerBIClient(powerBIConfiguration);
+			}
+		}
+
+		/// <summary>
+		/// Gets the configuration.
+		/// </summary>
+		/// <returns>The configuration.</returns>
+		/// <param name="url">URL.</param>
+		/// <param name="authority">Authority.</param>
+		/// <param name="resource">Resource.</param>
+		/// <param name="client">Client.</param>
+		/// <param name="user">User.</param>
+		/// <param name="password">Password.</param>
+		public IPowerBIConfiguration GetConfiguration(string url, string authority, string resource, string client, string user, string password)
+		{
+			if(string.IsNullOrEmpty(url)) throw new ArgumentNullException("url");
+			if(string.IsNullOrEmpty(authority)) throw new ArgumentNullException("authority");
+			if(string.IsNullOrEmpty(resource)) throw new ArgumentNullException("resource");
+			if(string.IsNullOrEmpty(client)) throw new ArgumentNullException("client");
+			if(string.IsNullOrEmpty(user)) throw new ArgumentNullException("user");
+			if(string.IsNullOrEmpty(user)) throw new ArgumentNullException("password");
+
+			return new PowerBISimpleConfiguration 
+			{
+				Url = url,
+				Authority = authority,
+				Client = client,
+				Resource = resource,
+				User = user,
+				Password = password
+			};
 		}
 
 		/// <summary>
