@@ -35,7 +35,7 @@ namespace PowerBI.Api.Client.Schema
 		/// </summary>
 		/// <returns>The table.</returns>
 		/// <param name="type">Type.</param>
-		static TableSchema GetTable(Type type)
+		public static TableSchema GetTable(Type type)
 		{
 			var table = new TableSchema()
 			{

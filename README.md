@@ -8,9 +8,13 @@ Check out the article on TechNet Wiki : [TechNet Wiki - PowerBI API in .Net](htt
 
 ## Installation
 
+**/!\ Take care**
+Version 1.1 is obsolete. Please read the wiki page for v1.2 alpha : https://github.com/Vtek/PowerBI.Api.Client/wiki/Version-1.2-alpha
+
 ```
-PM> Install-Package PowerBI.Api.Client
+PM> Install-Package PowerBI.Api.Client -Pre
 ```
+
 
 ## Features
 
@@ -21,10 +25,9 @@ PM> Install-Package PowerBI.Api.Client
   * Clean data from tables
 
 
-
 ## Getting started
 
-To configure the PowerBI Api Client you must use the configuration section. Add it to the .config :
+To configure the PowerBI Api Client you can use the configuration section. Just add it to the .config :
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -40,9 +43,21 @@ To configure the PowerBI Api Client you must use the configuration section. Add 
       	  User="MyUserName" 
       	  Password="MyPassword"/>
 	    <Api 
-	      Url="https://api.powerbi.com/beta/myorg/datasets" />
+	      Url="https://api.powerbi.com/v1.0/myorg" />
 	  </PowerBIConfiguration>
 </configuration>
+```
+
+You can also initialize the configuration by code (The configuration section is use by default if Initialize is not call) : 
+
+```csharp
+PowerBIClient.Initialize("myUrl", "myAuthority", "myResource", "myClient", "myUser", "myPassword");
+```
+
+It is possible to get a configuration object :
+
+```csharp
+var configuration = PowerBIClient.GetConfiguration("myUrl", "myAuthority", "myResource", "myClient", "myUser", "myPassword");
 ```
 
 The client is now ready. It's easy to use, call the **Do** method of **PowerBIClient** class to define an action which uses an authenticated instance.
@@ -53,6 +68,21 @@ PowerBIClient.Do(api => {
 });
 ```
 
+If you want to use a configuration object call **Do** method with the configuration instance :
+
+```csharp
+PowerBIClient.Do(configuration, api => {
+
+});
+```
+
+Asynchronous call are avaible in 1.2 version :
+
+```csharp
+await PowerBIClient.DoAsync(api => {
+
+});
+```
 
 
 ## Api methods
@@ -89,6 +119,27 @@ PowerBIClient.Do(api => {
 ```csharp
 PowerBIClient.Do(api => {
 	var isCreated = api.CreateDataset("myDatasetName", typeof(MyObject1), typeof(MyObject2), ...);
+});
+```
+
+**Get groups**
+```csharp
+PowerBIClient.Do(api => {
+	var datasets = api.GetGroups();
+});
+```
+
+**List tables**
+```csharp
+PowerBIClient.Do(api => {
+	var tables = api.GetTables("XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX");
+});
+```
+
+**Update a table**
+```csharp
+PowerBIClient.Do(api => {
+	var isCreated = api.UpdateTable("XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX", "myTableName", typeof(MyObject1));
 });
 ```
 

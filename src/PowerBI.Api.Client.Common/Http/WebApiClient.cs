@@ -65,6 +65,24 @@ namespace PowerBI.Api.Client.Http
 		}
 
 		/// <summary>
+		/// Put the specified url and obj.
+		/// </summary>
+		/// <param name="url">URL.</param>
+		/// <param name="obj">Object.</param>
+		public bool Put(string url, object obj)
+		{
+			using (var httpClient = new HttpClient())
+			{
+				var json = JsonConvert.SerializeObject(obj, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+				httpClient.DefaultRequestHeaders.Add("Authorization", string.Format("Bearer {0}", AccessToken));
+				httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+				var responseTask = httpClient.PutAsync(url, new StringContent(json, Encoding.UTF8, "application/json"));
+				responseTask.Wait();
+				return responseTask.Result.EnsureSuccessStatusCode().IsSuccessStatusCode;
+			}
+		}
+
+		/// <summary>
 		/// Delete.
 		/// </summary>
 		/// <param name="url">URL.</param>

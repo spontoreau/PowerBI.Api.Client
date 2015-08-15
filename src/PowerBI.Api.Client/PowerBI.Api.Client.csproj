@@ -68,7 +68,7 @@
       <Link>Configuration\OAuth.cs</Link>
     </Compile>
     <Compile Include="..\PowerBI.Api.Client.Common\Configuration\PowerBIConfiguration.cs">
-      <Link>Configuration\PowerBIConfiguration.cs</Link>
+      <Link>Configuration\PowerBISimpleConfiguration.cs</Link>
     </Compile>
     <Compile Include="..\PowerBI.Api.Client.Common\Http\WebApiClient.cs">
       <Link>Http\WebApiClient.cs</Link>
@@ -99,6 +99,21 @@
     </Compile>
     <Compile Include="..\PowerBI.Api.Client.Common\PowerBIClient.cs">
       <Link>PowerBIClient.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Configuration\IPowerBIConfiguration.cs">
+      <Link>Configuration\IPowerBIConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Configuration\PowerBIConfigurationSection.cs">
+      <Link>Configuration\PowerBIConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Model\GroupCollection.cs">
+      <Link>Model\GroupCollection.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Model\Table.cs">
+      <Link>Model\Table.cs</Link>
+    </Compile>
+    <Compile Include="..\PowerBI.Api.Client.Common\Model\TableCollection.cs">
+      <Link>Model\TableCollection.cs</Link>
     </Compile>
   </ItemGroup>
 </Project>

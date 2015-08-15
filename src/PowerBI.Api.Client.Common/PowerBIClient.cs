@@ -5,12 +5,11 @@ using PowerBI.Api.Client.Configuration;
 using PowerBI.Api.Client.Http;
 using PowerBI.Api.Client.Model;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using System.Threading.Tasks;
 
 #if !PCL
 using PowerBI.Api.Client.Schema;
 using System.Configuration;
-#else
-using System.Threading.Tasks;
 #endif
 
 namespace PowerBI.Api.Client
@@ -28,17 +27,13 @@ namespace PowerBI.Api.Client
 		/// <summary>
 		/// The root configuration.
 		/// </summary>
-		#if !PCL
-		static readonly PowerBIConfiguration RootConfiguration;
-		#else
-		static PowerBIConfiguration RootConfiguration;
-		#endif
+		static IPowerBIConfiguration RootConfiguration;
 
 		/// <summary>
 		/// Gets or sets the configuration.
 		/// </summary>
 		/// <value>The configuration.</value>
-		PowerBIConfiguration Configuration { get; set; }
+		IPowerBIConfiguration Configuration { get; set; }
 
 		/// <summary>
 		/// Gets or sets the authentication context.
@@ -53,34 +48,52 @@ namespace PowerBI.Api.Client
 		string AccessToken { get; set; }
 
 		/// <summary>
-		/// Initializes the <see cref="PowerBI.Api.Client.PowerBIClient"/> class.
-		/// </summary>
-		static PowerBIClient(){
-			#if !PCL
-			RootConfiguration = (PowerBIConfiguration)ConfigurationManager.GetSection(typeof(PowerBIConfiguration).Name);
-			#endif
-		}
-
-		/// <summary>
 		/// Initializes a new instance of the PowerBI class.
 		/// </summary>
 		/// <param name="configuration">Configuration.</param>
-		PowerBIClient(PowerBIConfiguration configuration)
+		PowerBIClient(IPowerBIConfiguration configuration)
 		{
 			Configuration = configuration;
 		}
-
-		#if PCL
+			
 		/// <summary>
-		/// Intialize the specified api and oAuth configuration.
+		/// Initialize the api.
 		/// </summary>
-		/// <param name="api">API.</param>
-		/// <param name="oAuth">O auth.</param>
-		public static void Initialize(PowerBI.Api.Client.Configuration.Api api, OAuth oAuth)
+		/// <param name="url">URL.</param>
+		/// <param name="authority">Authority.</param>
+		/// <param name="resource">Resource.</param>
+		/// <param name="client">Client.</param>
+		/// <param name="user">User.</param>
+		/// <param name="password">Password.</param>
+		public static void Initialize(string url, string authority, string resource, string client, string user, string password)
 		{
-			RootConfiguration = new PowerBIConfiguration { Api = api, OAuth = oAuth };
+			if(string.IsNullOrEmpty(url)) throw new ArgumentNullException("url");
+			if(string.IsNullOrEmpty(authority)) throw new ArgumentNullException("authority");
+			if(string.IsNullOrEmpty(resource)) throw new ArgumentNullException("resource");
+			if(string.IsNullOrEmpty(client)) throw new ArgumentNullException("client");
+			if(string.IsNullOrEmpty(user)) throw new ArgumentNullException("user");
+			if(string.IsNullOrEmpty(user)) throw new ArgumentNullException("password");
+
+			Initialize(new PowerBISimpleConfiguration 
+			{
+				Url = url,
+				Authority = authority,
+				Client = client,
+				Resource = resource,
+				User = user,
+				Password = password
+			});
 		}
-		#endif
+
+		/// <summary>
+		/// Initialize the specified powerBIConfiguration.
+		/// </summary>
+		/// <param name="powerBIConfiguration">Power BI configuration.</param>
+		public static void Initialize(IPowerBIConfiguration powerBIConfiguration)
+		{
+			if(powerBIConfiguration == null) throw new ArgumentNullException("powerBIConfiguration");
+			RootConfiguration = powerBIConfiguration;
+		}
 
 		/// <summary>
 		/// Do the specified action.
@@ -107,6 +120,80 @@ namespace PowerBI.Api.Client
 		}
 
 		/// <summary>
+		/// Do the specified function asynchronously. 
+		/// </summary>
+		/// <returns>The async.</returns>
+		/// <param name="function">Function.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public async static Task<T> DoAsync<T>(Func<PowerBIClient, T> function)
+		{
+			//Lazy implementation...
+			return await Task.Run<T>(() => Do<T>(function));
+		}
+
+		/// <summary>
+		/// Do the specified function asynchronously. 
+		/// </summary>
+		/// <returns>The async.</returns>
+		/// <param name="action">Action.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public async static Task DoAsync<T>(Action<PowerBIClient> action)
+		{
+			//Lazy implementation...
+			await Task.Run(() => Do(action));
+		}
+
+		/// <summary>
+		/// Do the specified action for a specific configuration.
+		/// </summary>
+		/// <param name="action">Action.</param>
+		/// <param name="configuration">Configuration</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public static void Do(IPowerBIConfiguration configuration, Action<PowerBIClient> action)
+		{
+			var api = Get(configuration);
+			api.Authenticate();
+			action(api);
+		}
+
+		/// <summary>
+		/// Do the specified function for a specific configuration.
+		/// </summary>
+		/// <param name="function">Function.</param>
+		/// <param name="configuration">Configuration</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public static T Do<T>(IPowerBIConfiguration configuration, Func<PowerBIClient, T> function)
+		{
+			var api = Get(configuration);
+			api.Authenticate();
+			return function(api);
+		}
+
+		/// <summary>
+		/// Do the specified action for a specific configuration.
+		/// </summary>
+		/// <param name="action">Action.</param>
+		/// <param name="configuration">Configuration</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public async static Task DoAsync(IPowerBIConfiguration configuration, Action<PowerBIClient> action)
+		{
+			//Lazy implementation...
+			await Task.Run(() => Do(configuration, action));
+		}
+
+		/// <summary>
+		/// Do the specified function for a specific configuration.
+		/// </summary>
+		/// <param name="function">Function.</param>
+		/// <param name="configuration">Configuration</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public async static Task<T> DoAsync<T>(IPowerBIConfiguration configuration, Func<PowerBIClient, T> function)
+		{
+			//Lazy implementation...
+			return await Task.Run<T>(() => Do<T>(configuration, function));
+		}
+
+		/// <summary>
 		/// Get a PowerBI instance.
 		/// </summary>
 		/// 
@@ -119,14 +206,61 @@ namespace PowerBI.Api.Client
 		}
 
 		/// <summary>
+		/// Get a PowerBI instance corresponding to a configuration.
+		/// </summary>
+		/// 
+		static PowerBIClient Get(IPowerBIConfiguration powerBIConfiguration)
+		{
+			lock(SyncRoot)
+			{
+				return new PowerBIClient(powerBIConfiguration);
+			}
+		}
+
+		/// <summary>
+		/// Gets the configuration.
+		/// </summary>
+		/// <returns>The configuration.</returns>
+		/// <param name="url">URL.</param>
+		/// <param name="authority">Authority.</param>
+		/// <param name="resource">Resource.</param>
+		/// <param name="client">Client.</param>
+		/// <param name="user">User.</param>
+		/// <param name="password">Password.</param>
+		public static IPowerBIConfiguration GetConfiguration(string url, string authority, string resource, string client, string user, string password)
+		{
+			if(string.IsNullOrEmpty(url)) throw new ArgumentNullException("url");
+			if(string.IsNullOrEmpty(authority)) throw new ArgumentNullException("authority");
+			if(string.IsNullOrEmpty(resource)) throw new ArgumentNullException("resource");
+			if(string.IsNullOrEmpty(client)) throw new ArgumentNullException("client");
+			if(string.IsNullOrEmpty(user)) throw new ArgumentNullException("user");
+			if(string.IsNullOrEmpty(user)) throw new ArgumentNullException("password");
+
+			return new PowerBISimpleConfiguration 
+			{
+				Url = url,
+				Authority = authority,
+				Client = client,
+				Resource = resource,
+				User = user,
+				Password = password
+			};
+		}
+
+		/// <summary>
 		/// Authenticate.
 		/// </summary>
 		void Authenticate()
 		{
+			#if !PCL
+			if(RootConfiguration == null)
+				RootConfiguration = (PowerBIConfiguration)ConfigurationManager.GetSection(typeof(PowerBIConfiguration).Name);
+			#endif
+
 			if (AuthenticationContext == null)
 			{
 				var tokenCache = new TokenCache();
-				AuthenticationContext = new AuthenticationContext(Configuration.OAuth.Authority, tokenCache);
+				AuthenticationContext = new AuthenticationContext(Configuration.Authority, tokenCache);
 			}
 
 			//For PCL we need to use the ADAL 3.O alpha. Because this version isn't a release we use compilation 
@@ -134,14 +268,14 @@ namespace PowerBI.Api.Client
 			//We use synchronous call (We be change in the next version of the library)
 			#if !PCL
 			var authResult = string.IsNullOrEmpty(AccessToken) 
-				? AuthenticationContext.AcquireToken(Configuration.OAuth.Resource,Configuration.OAuth.Client, new UserCredential(Configuration.OAuth.User, Configuration.OAuth.Password))
-				: AuthenticationContext.AcquireTokenSilent(Configuration.OAuth.Resource, Configuration.OAuth.Client);
+				? AuthenticationContext.AcquireToken(Configuration.Resource,Configuration.Client, new UserCredential(Configuration.User, Configuration.Password))
+				: AuthenticationContext.AcquireTokenSilent(Configuration.Resource, Configuration.Client);
 
 			AccessToken = authResult.AccessToken;
 			#else
 			var task = string.IsNullOrEmpty(AccessToken) 
-				? AuthenticationContext.AcquireTokenAsync(Configuration.OAuth.Resource,Configuration.OAuth.Client, new UserCredential(Configuration.OAuth.User, Configuration.OAuth.Password))	
-				: AuthenticationContext.AcquireTokenSilentAsync(Configuration.OAuth.Resource, Configuration.OAuth.Client);	
+				? AuthenticationContext.AcquireTokenAsync(Configuration.Resource,Configuration.Client, new UserCredential(Configuration.User, Configuration.Password))	
+				: AuthenticationContext.AcquireTokenSilentAsync(Configuration.Resource, Configuration.Client);	
 			Task.WaitAll(task);
 			AccessToken = task.Result.AccessToken;
 
@@ -155,7 +289,28 @@ namespace PowerBI.Api.Client
 		public IList<Dataset> GetDatasets()
 		{
 			return new WebApiClient(AccessToken)
-				.Get<DatasetCollection>(Configuration.Api.Url).Datasets;
+				.Get<DatasetCollection>(GetDatasetUrl()).Value;
+		}
+
+		/// <summary>
+		/// Gets all dataset.
+		/// </summary>
+		/// <returns>The all dataset.</returns>
+		public IList<Dataset> GetGroups()
+		{
+			return new WebApiClient(AccessToken)
+				.Get<GroupCollection>(Configuration.Url).Datasets;
+		}
+
+		/// <summary>
+		/// Gets the tables.
+		/// </summary>
+		/// <returns>The tables.</returns>
+		/// <param name="datasetId">Dataset identifier.</param>
+		public IList<Table> GetTables(string datasetId)
+		{
+			return new WebApiClient(AccessToken)
+				.Get<TableCollection>(GetTableUrl(datasetId)).Tables;
 		}
 
 		/// <summary>
@@ -201,10 +356,21 @@ namespace PowerBI.Api.Client
 		public bool CreateDataset(string datasetName, bool useRetentionPolicy, params Type[] types)
 		{
 			#if !PCL
+
 			return new WebApiClient(AccessToken)
-				.Post(useRetentionPolicy ? string.Format("{0}?defaultRetentionPolicy=basicFIFO", Configuration.Api.Url) : Configuration.Api.Url, SchemaBuilder.GetDataset(datasetName, ref types));
+				.Post(string.Format("{0}/dataset?defaultRetentionPolicy={1}", Configuration.Url, useRetentionPolicy ? "basicFIFO" : "none"), SchemaBuilder.GetDataset(datasetName, ref types));
 			#else
 			throw new NotImplementedException("Dataset creation isn't implement in PCL version of PowerBI.Api.Client");
+			#endif
+		}
+
+		public bool UpdateTable(string datasetId, string tableName, Type type)
+		{
+			#if !PCL
+			return new WebApiClient(AccessToken)
+				.Put(GetTableUpdateUrl(datasetId, tableName), SchemaBuilder.GetTable(type));
+			#else
+			throw new NotImplementedException("Table update isn't implement in PCL version of PowerBI.Api.Client");
 			#endif
 		}
 
@@ -216,7 +382,7 @@ namespace PowerBI.Api.Client
 		public bool Insert(string datasetId, object obj)
 		{
 			return new WebApiClient(AccessToken)
-				.Post(GetUrl(datasetId, obj.GetType()), new DatasetRows { Rows = new List<object> { obj } });
+				.Post(GetTableRowsUrl(datasetId, obj.GetType()), new DatasetRows { Rows = new List<object> { obj } });
 		}
 
 		/// <summary>
@@ -231,7 +397,7 @@ namespace PowerBI.Api.Client
 				return false;
 				
 			return new WebApiClient(AccessToken)
-				.Post(GetUrl(datasetId, objs[0].GetType()), new DatasetRows { Rows = objs });
+				.Post(GetTableRowsUrl(datasetId, objs[0].GetType()), new DatasetRows { Rows = objs });
 		}
 
 		/// <summary>
@@ -242,7 +408,7 @@ namespace PowerBI.Api.Client
 		public bool Delete<T>(string datasetId)
 		{
 			return new WebApiClient(AccessToken)
-				.Delete(GetUrl(datasetId, typeof(T)));
+				.Delete(GetTableRowsUrl(datasetId, typeof(T)));
 		}
 
 		/// <summary>
@@ -251,9 +417,38 @@ namespace PowerBI.Api.Client
 		/// <returns>The insert URL.</returns>
 		/// <param name="datasetId">Dataset identifier.</param>
 		/// <param name="type">Type.</param>
-		string GetUrl(string datasetId, Type type)
+		string GetTableRowsUrl(string datasetId, Type type)
 		{
-			return string.Format("{0}/{1}/tables/{2}/rows", Configuration.Api.Url, datasetId, type.Name);
+			return string.Format("{0}/datasets/{1}/tables/{2}/rows", Configuration.Url, datasetId, type.Name);
+		}
+
+		/// <summary>
+		/// Gets the table URL.
+		/// </summary>
+		/// <returns>The table URL.</returns>
+		/// <param name="datasetId">Dataset identifier.</param>
+		string GetTableUrl(string datasetId)
+		{
+			return string.Format("{0}/datasets/{1}/tables", Configuration.Url, datasetId);
+		}
+
+		/// <summary>
+		/// Gets the table URL.
+		/// </summary>
+		/// <returns>The table URL.</returns>
+		/// <param name="datasetId">Dataset identifier.</param>
+		string GetTableUpdateUrl(string datasetId, string tableName)
+		{
+			return string.Format("{0}/datasets/{1}/tables/{3}", Configuration.Url, datasetId, tableName);
+		}
+
+		/// <summary>
+		/// Gets the dataset URL.
+		/// </summary>
+		/// <returns>The dataset URL.</returns>
+		string GetDatasetUrl()
+		{
+			return string.Format("{0}/datasets", Configuration.Url);
 		}
 	}
 }
